@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country and Capital Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            display: block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Country and Capital Quiz</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Quiz</button>
+    <div id="results"></div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Berlin", "Paris", "Madrid"],
+                correct: 2
+            },
+            {
+                question: "Which country has Tokyo as its capital?",
+                options: ["China", "South Korea", "Thailand", "Japan"],
+                correct: 3
+            },
+            {
+                question: "What is the capital of Australia?",
+                options: ["Sydney", "Melbourne", "Canberra", "Perth"],
+                correct: 2
+            },
+            {
+                question: "Which country has Ottawa as its capital?",
+                options: ["USA", "Canada", "Mexico", "Brazil"],
+                correct: 1
+            },
+            {
+                question: "What is the capital of Egypt?",
+                options: ["Alexandria", "Cairo", "Luxor", "Giza"],
+                correct: 1
+            },
+            {
+                question: "Which country has Moscow as its capital?",
+                options: ["Poland", "Ukraine", "Belarus", "Russia"],
+                correct: 3
+            },
+            {
+                question: "What is the capital of Brazil?",
+                options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+                correct: 2
+            },
+            {
+                question: "Which country has New Delhi as its capital?",
+                options: ["Pakistan", "Bangladesh", "India", "Nepal"],
+                correct: 2
+            },
+            {
+                question: "What is the capital of South Africa?",
+                options: ["Cape Town", "Johannesburg", "Durban", "Pretoria"],
+                correct: 3
+            },
+            {
+                question: "Which country has Beijing as its capital?",
+                options: ["Japan", "South Korea", "China", "Vietnam"],
+                correct: 2
+            }
+        ];
+
+        function buildQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizData.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${question.question}</p>
+                    ${question.options.map((option, i) => `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${option}
+                        </label>
+                    `).join('')}
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function showResults() {
+            const resultsContainer = document.getElementById('results');
+            let score = 0;
+            quizData.forEach((question, index) => {
+                const selector = `input[name="question${index}"]:checked`;
+                const userAnswer = (document.querySelector(selector) || {}).value;
+                if (userAnswer == question.correct) {
+                    score++;
+                }
+            });
+            resultsContainer.innerHTML = `You scored ${score} out of ${quizData.length}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', buildQuiz);
+        document.getElementById('submit').addEventListener('click', showResults);
+    </script>
+</body>
+</html>
